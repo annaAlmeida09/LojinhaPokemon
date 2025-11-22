@@ -1,4 +1,4 @@
-# C06---L2
+# C07---L2
 Projeto de Banco de Dados I - Inatel
 # Banco de Dados para Lojas Pokémon
 
