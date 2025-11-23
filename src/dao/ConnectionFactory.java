@@ -6,16 +6,17 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-    // AJUSTE AQUI conforme seu MySQL:
-    private static final String URL = "jdbc:mysql://localhost:3306/lojinha_pokemon?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "SUA_SENHA_AQUI";
+    private static final String URL =
+            "jdbc:mysql://localhost:3306/pokemon_store?useSSL=false&serverTimezone=UTC";
+    private static final String USER = "loja_user";
+    private static final String PASSWORD = "pokepass";
+
 
     public static Connection getConnection() {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            System.out.println("Erro ao conectar ao banco: " + e.getMessage());
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

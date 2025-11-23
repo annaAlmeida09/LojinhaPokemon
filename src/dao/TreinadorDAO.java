@@ -1,19 +1,17 @@
 package dao;
 
 import model.Treinador;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TreinadorDAO {
 
-    // TABELA: Treinador
-    // COLUNAS (ajuste se necessário):
-    // id (PK), nome, pokeYens, insignias
+    // Tabela Treinador:
+    // id_trainer (PK), nome, pokeyens, insignias
 
     public void inserir(Treinador t) {
-        String sql = "INSERT INTO Treinador (nome, pokeYens, insignias) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Treinador (nome, pokeyens, insignias) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -23,15 +21,15 @@ public class TreinadorDAO {
             stmt.setInt(3, t.getInsignias());
 
             stmt.executeUpdate();
-            System.out.println("Treinador inserido com sucesso!");
-
+            System.out.println("Treinador inserido!");
         } catch (SQLException e) {
             System.out.println("Erro ao inserir treinador: " + e.getMessage());
         }
     }
 
     public void atualizar(Treinador t) {
-        String sql = "UPDATE Treinador SET nome = ?, pokeYens = ?, insignias = ? WHERE id = ?";
+        String sql = "UPDATE Treinador SET nome = ?, pokeyens = ?, insignias = ? " +
+                "WHERE id_trainer = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -42,57 +40,48 @@ public class TreinadorDAO {
             stmt.setInt(4, t.getId());
 
             int linhas = stmt.executeUpdate();
-            if (linhas > 0) {
-                System.out.println("Treinador atualizado com sucesso!");
-            } else {
-                System.out.println("Treinador não encontrado.");
-            }
-
+            System.out.println(linhas > 0 ? "Treinador atualizado!" : "Treinador não encontrado.");
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar treinador: " + e.getMessage());
         }
     }
 
-    public void deletar(int id) {
-        String sql = "DELETE FROM Treinador WHERE id = ?";
+    public void deletar(int idTrainer) {
+        String sql = "DELETE FROM Treinador WHERE id_trainer = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setInt(1, idTrainer);
             int linhas = stmt.executeUpdate();
-            if (linhas > 0) {
-                System.out.println("Treinador deletado com sucesso!");
-            } else {
-                System.out.println("Treinador não encontrado.");
-            }
-
+            System.out.println(linhas > 0 ? "Treinador deletado!" : "Treinador não encontrado.");
         } catch (SQLException e) {
             System.out.println("Erro ao deletar treinador: " + e.getMessage());
         }
     }
 
-    public Treinador buscarPorId(int id) {
-        String sql = "SELECT * FROM Treinador WHERE id = ?";
+    public Treinador buscarPorId(int idTrainer) {
+        String sql = "SELECT * FROM Treinador WHERE id_trainer = ?";
         Treinador t = null;
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setInt(1, idTrainer);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 t = new Treinador();
-                t.setId(rs.getInt("id"));
+                t.setId(rs.getInt("id_trainer"));
                 t.setNome(rs.getString("nome"));
-                t.setPokeYens(rs.getDouble("pokeYens"));
+                t.setPokeYens(rs.getDouble("pokeyens"));
                 t.setInsignias(rs.getInt("insignias"));
             }
 
         } catch (SQLException e) {
             System.out.println("Erro ao buscar treinador: " + e.getMessage());
         }
+
         return t;
     }
 
@@ -106,9 +95,9 @@ public class TreinadorDAO {
 
             while (rs.next()) {
                 Treinador t = new Treinador();
-                t.setId(rs.getInt("id"));
+                t.setId(rs.getInt("id_trainer"));
                 t.setNome(rs.getString("nome"));
-                t.setPokeYens(rs.getDouble("pokeYens"));
+                t.setPokeYens(rs.getDouble("pokeyens"));
                 t.setInsignias(rs.getInt("insignias"));
                 lista.add(t);
             }
