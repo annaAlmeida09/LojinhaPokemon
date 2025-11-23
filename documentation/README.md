@@ -17,7 +17,7 @@ O banco de dados contempla as seguintes entidades e relacionamentos principais:
 - **Compra_Produto**: tabela de ligação M:N entre compras e produtos, contendo quantidade e preço unitário.
 - **Acesso_Loja**: registra o acesso de treinadores às lojas, funcionando como um histórico de navegação (relação M:N).
 
-- ![Diagrama do Banco de Dados](diagrama.png)
+- ![Diagrama do Banco de Dados](DiagramaBancoLojinha.png)
 
 ### Principais Regras
 
