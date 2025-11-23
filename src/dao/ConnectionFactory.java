@@ -7,10 +7,13 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 
     private static final String URL =
-            "jdbc:mysql://localhost:3306/pokemon_store?useSSL=false&serverTimezone=UTC";
+            "jdbc:mysql://localhost:3306/pokemon_store"
+                    + "?useSSL=false"
+                    + "&allowPublicKeyRetrieval=true"
+                    + "&serverTimezone=UTC";
+
     private static final String USER = "loja_user";
     private static final String PASSWORD = "pokepass";
-
 
     public static Connection getConnection() {
         try {

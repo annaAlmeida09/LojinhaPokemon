@@ -18,7 +18,8 @@ public class MenuLoja {
             System.out.println("\n=== MENU LOJA ===");
             System.out.println("1 - Cadastrar Loja");
             System.out.println("2 - Listar Lojas");
-            System.out.println("3 - Listar Lojas com Treinador Responsável (JOIN)");
+            System.out.println("3 - Atualizar Loja");
+            System.out.println("4 - Deletar Loja");
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
 
@@ -27,7 +28,8 @@ public class MenuLoja {
             switch (opcao) {
                 case 1 -> cadastrar();
                 case 2 -> listar();
-                case 3 -> dao.listarLojasComTreinadorResponsavel();
+                case 3 -> atualizar();
+                case 4 -> deletar();
                 case 0 -> System.out.println("Voltando...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -44,10 +46,7 @@ public class MenuLoja {
         System.out.print("Tipo: ");
         String tipo = sc.nextLine();
 
-        System.out.print("ID do Treinador Responsável: ");
-        int idTrainer = lerInt();
-
-        Loja l = new Loja(0, nome, cidade, tipo, idTrainer);
+        Loja l = new Loja(0, nome, cidade, tipo);
         dao.inserir(l);
     }
 
@@ -57,6 +56,37 @@ public class MenuLoja {
         for (Loja l : lista) {
             System.out.println(l);
         }
+    }
+
+    private void atualizar() {
+        System.out.print("ID da loja: ");
+        int id = lerInt();
+
+        Loja l = dao.buscarPorId(id);
+        if (l == null) {
+            System.out.println("Loja não encontrada.");
+            return;
+        }
+
+        System.out.print("Novo nome (" + l.getNome() + "): ");
+        String nome = sc.nextLine();
+        if (!nome.isBlank()) l.setNome(nome);
+
+        System.out.print("Nova cidade (" + l.getCidade() + "): ");
+        String cidade = sc.nextLine();
+        if (!cidade.isBlank()) l.setCidade(cidade);
+
+        System.out.print("Novo tipo (" + l.getTipo() + "): ");
+        String tipo = sc.nextLine();
+        if (!tipo.isBlank()) l.setTipo(tipo);
+
+        dao.atualizar(l);
+    }
+
+    private void deletar() {
+        System.out.print("ID da loja para excluir: ");
+        int id = lerInt();
+        dao.deletar(id);
     }
 
     private int lerInt() {
