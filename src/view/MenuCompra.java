@@ -21,9 +21,9 @@ public class MenuCompra {
         do {
             System.out.println("\n=== MENU COMPRA ===");
             System.out.println("1 - Cadastrar Compra");
-            System.out.println("2 - Listar Compras (simples)");
-            System.out.println("3 - Listar Compras com Treinador e Loja (JOIN)");
-            System.out.println("4 - Listar Compras com Produtos (JOIN intermediária)");
+            System.out.println("2 - Listar Compras");
+            System.out.println("3 - Listar Compras com Treinador e Loja");
+            System.out.println("4 - Listar Compras com Produtos");
             System.out.println("5 - Adicionar Produto em Compra");
             System.out.println("6 - Deletar Compra");
             System.out.println("0 - Voltar");

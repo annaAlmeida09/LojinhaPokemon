@@ -18,7 +18,7 @@ public class MenuProduto {
             System.out.println("\n=== MENU PRODUTO ===");
             System.out.println("1 - Cadastrar Produto");
             System.out.println("2 - Listar Produtos");
-            System.out.println("3 - Listar Produtos com Loja (JOIN)");
+            System.out.println("3 - Listar Produtos com Loja ");
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
 

@@ -15,7 +15,7 @@ public class MenuPrincipal {
             System.out.println("2 - Gerenciar Lojas");
             System.out.println("3 - Gerenciar Produtos");
             System.out.println("4 - Gerenciar Compras");
-            System.out.println("5 - Relatórios (JOINs)");
+            System.out.println("5 - Relatórios");
             System.out.println("0 - Sair");
             System.out.print("Escolha: ");
 
