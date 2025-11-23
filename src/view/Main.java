@@ -1,7 +1,7 @@
 package view;
 
 public class Main {
-    static void main(String[] args) {
+    static void main() {
         MenuPrincipal menu = new MenuPrincipal();
         menu.exibirMenu();
     }
