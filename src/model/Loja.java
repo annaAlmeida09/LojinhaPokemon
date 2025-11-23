@@ -5,32 +5,47 @@ public class Loja {
     private String nome;
     private String cidade;
     private String tipo;
-    private int idTrainerResponsavel; // Id_Trainer no DER
 
     public Loja() {}
 
-    public Loja(int id, String nome, String cidade, String tipo, int idTrainerResponsavel) {
+    public Loja(int id, String nome, String cidade, String tipo) {
         this.id = id;
         this.nome = nome;
         this.cidade = cidade;
         this.tipo = tipo;
-        this.idTrainerResponsavel = idTrainerResponsavel;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getCidade() { return cidade; }
-    public void setCidade(String cidade) { this.cidade = cidade; }
+    public String getNome() {
+        return nome;
+    }
 
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public int getIdTrainerResponsavel() { return idTrainerResponsavel; }
-    public void setIdTrainerResponsavel(int idTrainerResponsavel) { this.idTrainerResponsavel = idTrainerResponsavel; }
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     @Override
     public String toString() {
@@ -39,7 +54,6 @@ public class Loja {
                 ", nome='" + nome + '\'' +
                 ", cidade='" + cidade + '\'' +
                 ", tipo='" + tipo + '\'' +
-                ", idTrainerResponsavel=" + idTrainerResponsavel +
                 '}';
     }
 }
