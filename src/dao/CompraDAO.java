@@ -1,7 +1,9 @@
 package dao;
 
 import model.Compra;
+
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,6 @@ public class CompraDAO {
     // id_compra, id_trainer, id_loja, data_compra, valor_total
 
     public void inserir(Compra c) {
-        // Se quiser deixar o banco calcular valor_total via trigger, pode usar 0 aqui
         String sql = "INSERT INTO Compra (id_trainer, id_loja, valor_total) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -28,7 +29,7 @@ public class CompraDAO {
                 c.setIdCompra(rs.getInt(1));
             }
 
-            System.out.println("Compra inserida!");
+            System.out.println("Compra inserida com sucesso! ID = " + c.getIdCompra());
         } catch (SQLException e) {
             System.out.println("Erro ao inserir compra: " + e.getMessage());
         }
@@ -61,7 +62,12 @@ public class CompraDAO {
 
             stmt.setInt(1, idCompra);
             int linhas = stmt.executeUpdate();
-            System.out.println(linhas > 0 ? "Compra deletada!" : "Compra não encontrada.");
+            if (linhas > 0) {
+                System.out.println("Compra deletada com sucesso!");
+            } else {
+                System.out.println("Compra não encontrada.");
+            }
+
         } catch (SQLException e) {
             System.out.println("Erro ao deletar compra: " + e.getMessage());
         }
@@ -82,8 +88,13 @@ public class CompraDAO {
                 c.setIdCompra(rs.getInt("id_compra"));
                 c.setIdTreinador(rs.getInt("id_trainer"));
                 c.setIdLoja(rs.getInt("id_loja"));
+
+                Timestamp ts = rs.getTimestamp("data_compra");
+                if (ts != null) {
+                    c.setDataCompra(ts.toLocalDateTime());
+                }
+
                 c.setValorTotal(rs.getDouble("valor_total"));
-                c.setDataCompra(rs.getTimestamp("data_compra").toLocalDateTime());
             }
 
         } catch (SQLException e) {
@@ -106,8 +117,13 @@ public class CompraDAO {
                 c.setIdCompra(rs.getInt("id_compra"));
                 c.setIdTreinador(rs.getInt("id_trainer"));
                 c.setIdLoja(rs.getInt("id_loja"));
+
+                Timestamp ts = rs.getTimestamp("data_compra");
+                if (ts != null) {
+                    c.setDataCompra(ts.toLocalDateTime());
+                }
+
                 c.setValorTotal(rs.getDouble("valor_total"));
-                c.setDataCompra(rs.getTimestamp("data_compra").toLocalDateTime());
                 lista.add(c);
             }
 
@@ -118,7 +134,7 @@ public class CompraDAO {
         return lista;
     }
 
-    // JOIN simples: Compra + Treinador + Loja
+    // JOIN: Compra + Treinador + Loja
     public void listarComprasComTreinadorELoja() {
         String sql = """
                 SELECT c.id_compra,
@@ -137,11 +153,13 @@ public class CompraDAO {
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
+            System.out.println("\n--- COMPRAS (Treinador + Loja) ---");
             while (rs.next()) {
+                LocalDateTime data = rs.getTimestamp("data_compra").toLocalDateTime();
                 System.out.printf(
                         "Compra %d | Data: %s | Treinador: %s | Loja: %s (%s) | Total: R$ %.2f%n",
                         rs.getInt("id_compra"),
-                        rs.getTimestamp("data_compra").toLocalDateTime(),
+                        data,
                         rs.getString("treinador"),
                         rs.getString("loja"),
                         rs.getString("cidade"),
@@ -154,7 +172,7 @@ public class CompraDAO {
         }
     }
 
-    // JOIN com tabela intermediária: Compra + Compra_Produto + Produto
+    // JOIN: Compra + Compra_Produto + Produto
     public void listarComprasComProdutos() {
         String sql = """
                 SELECT c.id_compra,
@@ -176,6 +194,7 @@ public class CompraDAO {
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
+            System.out.println("\n--- COMPRAS COM PRODUTOS ---");
             while (rs.next()) {
                 System.out.printf(
                         "Compra %d | Treinador: %s | Loja: %s | Produto: %s | Qtd: %d | Unit: R$ %.2f | Subtotal: R$ %.2f%n",

@@ -3,11 +3,11 @@ package model;
 import java.time.LocalDateTime;
 
 public class Compra {
-    private int idCompra;       // id_compra
-    private int idTreinador;    // id_trainer
-    private int idLoja;         // id_loja
+    private int idCompra;          // id_compra
+    private int idTreinador;       // id_trainer
+    private int idLoja;            // id_loja
     private LocalDateTime dataCompra; // data_compra
-    private double valorTotal;  // valor_total
+    private double valorTotal;     // valor_total
 
     public Compra() {}
 
